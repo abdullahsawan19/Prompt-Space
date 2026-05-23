@@ -56,7 +56,7 @@ const Navbar = () => {
             Log in
           </Link>
           <Link
-            to="/register"
+            to="/signup"
             className="text-[15px] font-semibold px-5 py-2.5 bg-[var(--color-brand-600)] hover:bg-[var(--color-brand-500)] text-[#fff] rounded-full transition-all shadow-[var(--shadow-sm)]"
           >
             Get Started

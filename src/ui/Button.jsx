@@ -6,18 +6,25 @@ const Button = ({
   variant = "primary",
   size = "md",
   className = "",
+  disabled = false,
   ...props
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center font-semibold rounded-full transition-all duration-200 cursor-pointer";
+    "inline-flex items-center justify-center font-semibold rounded-full transition-all duration-300";
 
   const variants = {
     primary:
-      "bg-[var(--color-brand-600)] hover:bg-[var(--color-brand-500)] text-[#fff] shadow-[var(--shadow-md)]",
-    secondary:
-      "bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-200)] text-[var(--color-grey-900)]",
+      "bg-[var(--color-brand-600)] text-[#fff] shadow-[var(--shadow-sm)]",
+    secondary: "bg-[var(--color-grey-100)] text-[var(--color-grey-900)]",
     outline:
-      "border border-[var(--color-grey-300)] hover:bg-[var(--color-grey-50)] text-[var(--color-grey-700)]",
+      "border border-[var(--color-grey-300)] text-[var(--color-grey-700)] bg-transparent",
+  };
+
+  const hoverStyles = {
+    primary:
+      "hover:bg-[var(--color-brand-500)] hover:shadow-[var(--shadow-md)] hover:-translate-y-0.5",
+    secondary: "hover:bg-[var(--color-grey-200)] hover:-translate-y-0.5",
+    outline: "hover:bg-[var(--color-grey-50)] hover:-translate-y-0.5",
   };
 
   const sizes = {
@@ -26,9 +33,13 @@ const Button = ({
     lg: "px-8 py-4 text-lg",
   };
 
-  const combinedClassName = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
+  const stateStyles = disabled
+    ? "opacity-60 cursor-not-allowed"
+    : `cursor-pointer ${hoverStyles[variant]}`;
 
-  if (to) {
+  const combinedClassName = `${baseStyles} ${variants[variant]} ${sizes[size]} ${stateStyles} ${className}`;
+
+  if (to && !disabled) {
     return (
       <Link to={to} className={combinedClassName} {...props}>
         {children}
@@ -37,7 +48,7 @@ const Button = ({
   }
 
   return (
-    <button className={combinedClassName} {...props}>
+    <button disabled={disabled} className={combinedClassName} {...props}>
       {children}
     </button>
   );

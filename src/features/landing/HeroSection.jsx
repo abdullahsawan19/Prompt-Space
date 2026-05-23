@@ -17,7 +17,7 @@ const HeroSection = () => {
           your AI prompts with your team.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button to="/register" size="lg">
+          <Button to="/signup" size="lg">
             Get Started Free
           </Button>
           <Button

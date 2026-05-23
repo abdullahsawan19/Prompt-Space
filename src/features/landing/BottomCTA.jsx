@@ -14,7 +14,7 @@ const BottomCTA = () => {
             now, no credit card required.
           </p>
           <Button
-            to="/register"
+            to="/signup"
             size="lg"
             className="bg-[var(--color-grey-0)] text-[var(--color-brand-600)] hover:bg-[var(--color-grey-100)] shadow-[var(--shadow-md)]"
           >
