@@ -4,7 +4,7 @@ const GoogleIcone = ({ onClick, disabled }) => {
       onClick={onClick}
       disabled={disabled}
       type="button"
-      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-[var(--color-grey-200)] rounded-xl bg-[var(--color-grey-0)] hover:bg-[var(--color-grey-50)] text-[var(--color-grey-900)] font-medium transition-colors shadow-[var(--shadow-sm)]"
+      className="cursor-pointer w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-[var(--color-grey-200)] rounded-xl bg-[var(--color-grey-0)] hover:bg-[var(--color-grey-50)] text-[var(--color-grey-900)] font-medium transition-colors shadow-[var(--shadow-sm)]"
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24">
         <path

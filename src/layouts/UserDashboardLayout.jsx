@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../ui/Sidebar";
 import Navbar from "../ui/Navbar";
-import { adminLinks } from "../utils/navLinks";
+import { userLinks } from "../utils/navLinks";
 import { HiOutlineMenu } from "react-icons/hi";
 import { useState } from "react";
 
-const AdminDashboardLayout = () => {
+const UserDashboardLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -35,8 +35,8 @@ const AdminDashboardLayout = () => {
         }`}
       >
         <Sidebar
-          navigateTo={"/admin/stats"}
-          navItems={adminLinks}
+          navigateTo={"/user-dashboard"}
+          navItems={userLinks}
           onClose={() => setIsMobileMenuOpen(false)}
         />
       </div>
@@ -50,4 +50,4 @@ const AdminDashboardLayout = () => {
   );
 };
 
-export default AdminDashboardLayout;
+export default UserDashboardLayout;

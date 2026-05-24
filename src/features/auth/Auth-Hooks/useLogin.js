@@ -21,7 +21,7 @@ export const useLogin = () => {
       if (user?.is_super_admin) {
         navigate("/admin/stats", { replace: true });
       } else {
-        navigate("/dashboard", { replace: true });
+        navigate("/user-dashboard", { replace: true });
       }
     },
     onError: (err) => {

@@ -10,7 +10,7 @@ const Button = ({
   ...props
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center font-semibold rounded-full transition-all duration-300";
+    "inline-flex items-center justify-center gap-2 font-semibold rounded-lg transition-all duration-300";
 
   const variants = {
     primary:
@@ -18,6 +18,8 @@ const Button = ({
     secondary: "bg-[var(--color-grey-100)] text-[var(--color-grey-900)]",
     outline:
       "border border-[var(--color-grey-300)] text-[var(--color-grey-700)] bg-transparent",
+    dangerGhost:
+      "border border-[var(--color-grey-200)] bg-transparent text-[var(--color-grey-600)]",
   };
 
   const hoverStyles = {
@@ -25,6 +27,8 @@ const Button = ({
       "hover:bg-[var(--color-brand-500)] hover:shadow-[var(--shadow-md)] hover:-translate-y-0.5",
     secondary: "hover:bg-[var(--color-grey-200)] hover:-translate-y-0.5",
     outline: "hover:bg-[var(--color-grey-50)] hover:-translate-y-0.5",
+    dangerGhost:
+      "hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:hover:border-red-900/50 dark:hover:bg-red-500/10 dark:hover:text-red-400",
   };
 
   const sizes = {
@@ -34,7 +38,7 @@ const Button = ({
   };
 
   const stateStyles = disabled
-    ? "opacity-60 cursor-not-allowed"
+    ? "opacity-70 cursor-not-allowed disabled:hover:bg-transparent disabled:hover:border-[var(--color-grey-200)]"
     : `cursor-pointer ${hoverStyles[variant]}`;
 
   const combinedClassName = `${baseStyles} ${variants[variant]} ${sizes[size]} ${stateStyles} ${className}`;

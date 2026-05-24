@@ -6,9 +6,32 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import FormsLayout from "./layouts/FormsLayout";
 import { Toaster } from "react-hot-toast";
-import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./features/auth/ProtectedRoute";
 import AdminDashboardLayout from "./layouts/AdminDashboardLayout";
+import UserDashboardLayout from "./layouts/UserDashboardLayout";
+
+const UserHome = () => (
+  <div className="text-2xl font-bold">User Dashboard Content</div>
+);
+const Prompts = () => (
+  <div className="text-2xl font-bold">My Prompts Content</div>
+);
+const Workspaces = () => (
+  <div className="text-2xl font-bold">Workspaces Content</div>
+);
+const Settings = () => (
+  <div className="text-2xl font-bold">Settings Content</div>
+);
+
+const AdminStats = () => (
+  <div className="text-2xl font-bold">System Stats Content</div>
+);
+const AdminUsers = () => (
+  <div className="text-2xl font-bold">Manage Users Content</div>
+);
+const AdminSettings = () => (
+  <div className="text-2xl font-bold">Admin Settings Content</div>
+);
 
 function App() {
   return (
@@ -25,11 +48,20 @@ function App() {
           </Route>
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route element={<UserDashboardLayout />}>
+              <Route path="/user-dashboard" element={<UserHome />} />
+              <Route path="/prompts" element={<Prompts />} />
+              <Route path="/workspaces" element={<Workspaces />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
           </Route>
 
           <Route element={<ProtectedRoute allowedRoles={["super_admin"]} />}>
-            <Route path="/admin/stats" element={<AdminDashboardLayout />} />
+            <Route element={<AdminDashboardLayout />}>
+              <Route path="/admin/stats" element={<AdminStats />} />
+              <Route path="/admin/users" element={<AdminUsers />} />
+              <Route path="/admin/settings" element={<AdminSettings />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
@@ -39,12 +71,8 @@ function App() {
         gutter={12}
         containerStyle={{ margin: "8px" }}
         toastOptions={{
-          success: {
-            duration: 4000,
-          },
-          error: {
-            duration: 5000,
-          },
+          success: { duration: 4000 },
+          error: { duration: 5000 },
           style: {
             fontSize: "16px",
             maxWidth: "500px",
