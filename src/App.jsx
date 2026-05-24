@@ -6,6 +6,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import FormsLayout from "./layouts/FormsLayout";
 import { Toaster } from "react-hot-toast";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./features/auth/ProtectedRoute";
+import AdminDashboardLayout from "./layouts/AdminDashboardLayout";
 
 function App() {
   return (
@@ -15,12 +18,22 @@ function App() {
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Landing />} />
           </Route>
+
           <Route element={<FormsLayout />}>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Route>
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+
+          <Route element={<ProtectedRoute allowedRoles={["super_admin"]} />}>
+            <Route path="/admin/stats" element={<AdminDashboardLayout />} />
+          </Route>
         </Routes>
       </BrowserRouter>
+
       <Toaster
         position="top-center"
         gutter={12}

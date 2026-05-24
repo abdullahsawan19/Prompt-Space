@@ -6,9 +6,11 @@ import Input from "../../ui/Input";
 import GoogleIcone from "../../ui/GoogleIcone";
 import GithubIcone from "../../ui/GithubIcone";
 import { useLogin } from "./Auth-Hooks/useLogin";
+import { useProviderAuth } from "./Auth-Hooks/useProviderAuth";
 
 const LoginForm = () => {
   const { mutate, isPending, error: serverError } = useLogin();
+  const { authWithProvider, isLoading: isProviderLoading } = useProviderAuth();
 
   const {
     register,
@@ -29,7 +31,7 @@ const LoginForm = () => {
     <div className="order-2 md:order-1 bg-[var(--color-grey-0)] p-8 sm:p-10 rounded-3xl shadow-[var(--shadow-md)] border border-[var(--color-grey-200)] transition-colors duration-300">
       {serverError && (
         <div className="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg text-center">
-          {serverError}
+          {serverError.message}
         </div>
       )}
 
@@ -80,8 +82,14 @@ const LoginForm = () => {
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-4">
-          <GoogleIcone />
-          <GithubIcone />
+          <GoogleIcone
+            onClick={() => authWithProvider("google")}
+            disabled={isProviderLoading || isPending}
+          />
+          <GithubIcone
+            onClick={() => authWithProvider("github")}
+            disabled={isProviderLoading || isPending}
+          />
         </div>
       </form>
 
