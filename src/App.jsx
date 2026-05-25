@@ -9,13 +9,13 @@ import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./features/auth/ProtectedRoute";
 import AdminDashboardLayout from "./layouts/AdminDashboardLayout";
 import UserDashboardLayout from "./layouts/UserDashboardLayout";
+import Prompts from "./pages/Prompts";
+import CreatePrompt from "./pages/CreatePrompt";
 
 const UserHome = () => (
   <div className="text-2xl font-bold">User Dashboard Content</div>
 );
-const Prompts = () => (
-  <div className="text-2xl font-bold">My Prompts Content</div>
-);
+
 const Workspaces = () => (
   <div className="text-2xl font-bold">Workspaces Content</div>
 );
@@ -51,6 +51,7 @@ function App() {
             <Route element={<UserDashboardLayout />}>
               <Route path="/user-dashboard" element={<UserHome />} />
               <Route path="/prompts" element={<Prompts />} />
+              <Route path="/createPrompt" element={<CreatePrompt />} />
               <Route path="/workspaces" element={<Workspaces />} />
               <Route path="/settings" element={<Settings />} />
             </Route>

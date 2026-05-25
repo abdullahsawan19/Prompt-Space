@@ -3,10 +3,20 @@ import Sidebar from "../ui/Sidebar";
 import Navbar from "../ui/Navbar";
 import { userLinks } from "../utils/navLinks";
 import { HiOutlineMenu } from "react-icons/hi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUser } from "../features/auth/Auth-Hooks/useUser";
+import { ensureUserAndWorkspace } from "../services/auth";
 
 const UserDashboardLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      ensureUserAndWorkspace(user);
+    }
+  }, [user]);
 
   return (
     <div className="flex h-screen overflow-hidden bg-[var(--color-grey-50)]">
