@@ -3,7 +3,6 @@ import Navbar from "../ui/Navbar";
 import Footer from "../ui/Footer";
 import { useTheme } from "../hooks/useTheme";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-// لو عندك Button component استخدمه بدل الـ Link للـ Get Started
 
 const publicLinks = [
   { name: "Stats", path: "#stats" },
@@ -15,7 +14,6 @@ const publicLinks = [
 const PublicLayout = () => {
   const { theme, toggleTheme } = useTheme();
 
-  // جمعنا الزراير اللي على اليمين في متغير عشان الكود يبقى نضيف
   const publicRightActions = (
     <>
       <button
@@ -45,7 +43,6 @@ const PublicLayout = () => {
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--color-grey-50)] text-[var(--color-grey-900)] transition-colors duration-300">
-      {/* 👈 استدعينا الناف بار وباصينا الداتا، وثبتناه فوق */}
       <Navbar
         links={publicLinks}
         rightActions={publicRightActions}
