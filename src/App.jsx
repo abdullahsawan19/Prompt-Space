@@ -11,14 +11,13 @@ import AdminDashboardLayout from "./layouts/AdminDashboardLayout";
 import UserDashboardLayout from "./layouts/UserDashboardLayout";
 import Prompts from "./pages/Prompts";
 import CreatePrompt from "./pages/CreatePrompt";
+import Workspaces from "./pages/Workspaces";
+import CreateWorkspace from "./features/workspaces/CreateWorkspace";
 
 const UserHome = () => (
   <div className="text-2xl font-bold">User Dashboard Content</div>
 );
 
-const Workspaces = () => (
-  <div className="text-2xl font-bold">Workspaces Content</div>
-);
 const Settings = () => (
   <div className="text-2xl font-bold">Settings Content</div>
 );
@@ -53,6 +52,7 @@ function App() {
               <Route path="/prompts" element={<Prompts />} />
               <Route path="/createPrompt" element={<CreatePrompt />} />
               <Route path="/workspaces" element={<Workspaces />} />
+              <Route path="/workspaces/new" element={<CreateWorkspace />} />
               <Route path="/settings" element={<Settings />} />
             </Route>
           </Route>

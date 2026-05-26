@@ -5,10 +5,11 @@ import {
   HiOutlineChartBar,
   HiOutlineCog,
 } from "react-icons/hi";
+import { IoMdCreate } from "react-icons/io";
 
 export const userLinks = [
   { name: "Dashboard", path: "/user-dashboard", icon: HiOutlineHome },
-  { name: "CreatePrompt", path: "/createPrompt", icon: HiOutlineHome },
+  { name: "CreatePrompt", path: "/createPrompt", icon: IoMdCreate },
   { name: "My Prompts", path: "/prompts", icon: HiOutlineDocumentText },
   { name: "Workspaces", path: "/workspaces", icon: HiOutlineUsers },
   { name: "Settings", path: "/settings", icon: HiOutlineCog },

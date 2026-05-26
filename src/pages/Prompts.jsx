@@ -1,9 +1,12 @@
 import { useState } from "react";
 import PromptDetailModal from "../features/prompts/PromptDetailModal";
-import PrompetHeadet from "../ui/PrompetHeadet";
 import DisplayPrompets from "../features/prompts/DisplayPrompets";
+import { useNavigate } from "react-router-dom";
+import ReuseableHeader from "../ui/ReuseableHeader";
 
 const Prompts = () => {
+  const navigate = useNavigate();
+
   const [selectedPrompt, setSelectedPrompt] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -14,8 +17,11 @@ const Prompts = () => {
 
   return (
     <div className="flex flex-col gap-8">
-      <PrompetHeadet />
-
+      <ReuseableHeader
+        name="My Prompts"
+        onClick={() => navigate("/createPrompt")}
+        createName="Create Prompt"
+      />
       <DisplayPrompets onOpenModal={handleOpenModal} />
 
       {selectedPrompt && (

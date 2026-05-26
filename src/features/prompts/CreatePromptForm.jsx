@@ -14,7 +14,6 @@ const CreatePromptForm = () => {
   const { user } = useUser();
   const { mutate: createPrompt, isPending: isCreating } = useCreatePrompt();
   const { isPending: isLoadingWorkspaces, data: workspaces } = useWorkspaces();
-  console.log(workspaces);
 
   const {
     register,
@@ -61,7 +60,6 @@ const CreatePromptForm = () => {
           {...register("description")}
         />
 
-        {/* Workspace Dropdown */}
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium text-[var(--color-grey-700)]">
             Workspace
