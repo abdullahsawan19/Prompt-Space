@@ -7,13 +7,14 @@ import Button from "../../ui/Button";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useUser } from "../auth/Auth-Hooks/useUser";
 import { useCreatePrompt } from "./prompts-Hooks/useCreatePrompt";
-import { useWorkspaces } from "../workspaces/workspaces-Hooks/useWorkspaces";
+import { useSimpleWorkspaces } from "./prompts-Hooks/useSimpleWorkspaces";
 
 const CreatePromptForm = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { mutate: createPrompt, isPending: isCreating } = useCreatePrompt();
-  const { isPending: isLoadingWorkspaces, data: workspaces } = useWorkspaces();
+  const { isPending: isLoadingWorkspaces, data: workspaces } =
+    useSimpleWorkspaces();
 
   const {
     register,

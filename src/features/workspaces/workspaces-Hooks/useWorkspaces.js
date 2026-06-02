@@ -5,12 +5,15 @@ import { useUser } from "../../auth/Auth-Hooks/useUser";
 export function useWorkspaces() {
   const { user } = useUser();
 
-  const { isPending, error, data } = useQuery({
+  const {
+    isLoading,
+    data: workspaces,
+    error,
+  } = useQuery({
     queryKey: ["workspaces", user?.id],
-    queryFn: () => getWorkspaces(user?.id),
+    queryFn: () => getWorkspaces(user.id),
     enabled: !!user?.id,
-    staleTime: 5 * 60 * 1000,
   });
 
-  return { isPending, error, data };
+  return { isLoading, error, workspaces };
 }

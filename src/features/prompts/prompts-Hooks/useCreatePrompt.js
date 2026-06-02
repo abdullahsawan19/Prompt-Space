@@ -3,13 +3,16 @@ import { createPrompt as createPromptApi } from "../../../services/apiPrompts";
 import toast from "react-hot-toast";
 
 export function useCreatePrompt() {
-  const queryClint = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: createPromptApi,
     onSuccess: () => {
       toast.success("Prompt created successfully!");
-      queryClint.invalidateQueries({ queryKey: ["prompts"] });
+      queryClient.invalidateQueries({ queryKey: ["prompts"] });
+      queryClient.invalidateQueries({
+        queryKey: ["workspaces"],
+      });
     },
     onError: (err) => {
       toast.error(err.message);

@@ -10,13 +10,57 @@ export async function getWorkspaces(userId) {
       workspaces (
         id,
         name,
+        type,
+        description,
+        prompts (
+          id,
+          title,
+          created_at
+        )
+      )
+    `,
+    )
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("Error fetching workspaces:", error);
+    throw new Error("Workspaces could not be loaded");
+  }
+
+  const uniqueWorkspaces = Array.from(
+    new Map(data.map((item) => [item.workspaces.id, item.workspaces])).values(),
+  ).map((workspace) => {
+    if (workspace.prompts && workspace.prompts.length > 0) {
+      workspace.prompts.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at),
+      );
+    }
+    return workspace;
+  });
+
+  return uniqueWorkspaces;
+}
+
+export async function getSimpleWorkspaces(userId) {
+  if (!userId) throw new Error("User ID is required");
+
+  const { data, error } = await supabase
+    .from("workspace_members")
+    .select(
+      `
+      workspaces (
+        id,
+        name,
         type
       )
     `,
     )
     .eq("user_id", userId);
 
-  if (error) throw new Error("Workspaces could not be loaded");
+  if (error) {
+    console.error("Error fetching simple workspaces for dropdown:", error);
+    throw new Error("Workspaces list could not be loaded");
+  }
 
   const uniqueWorkspaces = Array.from(
     new Map(data.map((item) => [item.workspaces.id, item.workspaces])).values(),

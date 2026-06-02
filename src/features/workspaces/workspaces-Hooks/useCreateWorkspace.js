@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createWorkspace as createWorkspaceApi } from "../../../services/apiWorkspaces";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export function useCreateWorkspace() {
   const queryClient = useQueryClient();
@@ -9,7 +10,7 @@ export function useCreateWorkspace() {
   const { mutate: createWorkspace, isPending: isCreating } = useMutation({
     mutationFn: createWorkspaceApi,
     onSuccess: () => {
-      alert("Workspace created successfully!");
+      toast.success("Workspace created successfully");
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       navigate("/workspaces");
     },
