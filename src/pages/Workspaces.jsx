@@ -6,7 +6,7 @@ const Workspaces = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col gap-8">
       <ReuseableHeader
         name="Work spaces"
         onClick={() => navigate("/workspaces/new")}

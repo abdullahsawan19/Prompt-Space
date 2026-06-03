@@ -8,7 +8,7 @@ const PromptCardActions = ({
   isPending,
 }) => {
   return (
-    <div className="absolute top-5 right-5 flex gap-3">
+    <div className="flex items-center gap-3">
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -40,7 +40,7 @@ const PromptCardActions = ({
         title="Delete Prompt"
         disabled={isPending}
       >
-        {isPending ? <SpinnerMini /> : <HiOutlineTrash size={20} />}{" "}
+        {isPending ? <SpinnerMini /> : <HiOutlineTrash size={20} />}
       </button>
     </div>
   );

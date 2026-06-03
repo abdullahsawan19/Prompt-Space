@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { HiOutlineExclamationCircle, HiOutlinePlus } from "react-icons/hi"; // ضفنا أيقونات
 
 import Card from "../../ui/Card";
 import Input from "../../ui/Input";
@@ -34,6 +35,34 @@ const CreatePromptForm = () => {
       },
     );
   };
+
+  if (isLoadingWorkspaces) {
+    return (
+      <Card className="flex justify-center items-center py-16">
+        <SpinnerMini />
+        <span className="ml-2 text-[var(--color-grey-500)]">Loading...</span>
+      </Card>
+    );
+  }
+
+  if (!workspaces || workspaces.length === 0) {
+    return (
+      <Card className="flex flex-col items-center text-center py-16">
+        <HiOutlineExclamationCircle className="text-5xl text-[var(--color-brand-500)] mb-4" />
+        <h3 className="text-xl font-bold text-[var(--color-grey-900)] mb-2">
+          No Workspace Found
+        </h3>
+        <p className="text-[var(--color-grey-500)] mb-6 max-w-md">
+          You need to create or join a workspace before you can create a prompt.
+          Workspaces help you organize and share your prompts.
+        </p>
+        <Button onClick={() => navigate("/workspaces/new")} variant="primary">
+          <HiOutlinePlus size={20} className="mr-2" />
+          Create Your First Workspace
+        </Button>
+      </Card>
+    );
+  }
 
   return (
     <Card>
@@ -72,23 +101,17 @@ const CreatePromptForm = () => {
                   ? "border-red-500"
                   : "border-[var(--color-grey-300)]"
               } bg-[var(--color-grey-0)] focus:outline-none focus:border-[var(--color-brand-500)] focus:ring-1 focus:ring-[var(--color-brand-500)] text-[var(--color-grey-900)] transition-colors`}
-              disabled={isLoadingWorkspaces || isCreating}
+              disabled={isCreating}
               {...register("workspace_id", {
                 required: "Please select a workspace",
               })}
             >
-              {isLoadingWorkspaces ? (
-                <option value="">Loading workspaces...</option>
-              ) : (
-                <>
-                  <option value="">Select a Workspace...</option>
-                  {workspaces?.map((ws) => (
-                    <option key={ws.id} value={ws.id}>
-                      {ws.name} {ws.type === "personal" ? "(Personal)" : ""}
-                    </option>
-                  ))}
-                </>
-              )}
+              <option value="">Select a Workspace...</option>
+              {workspaces.map((ws) => (
+                <option key={ws.id} value={ws.id}>
+                  {ws.name} {ws.type === "personal" ? "(Personal)" : ""}
+                </option>
+              ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[var(--color-grey-500)]">
               <svg

@@ -1,4 +1,3 @@
-// src/ui/CopyButton.jsx
 import { useState } from "react";
 import { HiOutlineClipboardCopy, HiCheck } from "react-icons/hi";
 import { copyToClipboard } from "../utils/helpers";

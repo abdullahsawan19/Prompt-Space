@@ -13,6 +13,7 @@ import Prompts from "./pages/Prompts";
 import CreatePrompt from "./pages/CreatePrompt";
 import Workspaces from "./pages/Workspaces";
 import CreateWorkspace from "./features/workspaces/CreateWorkspace";
+import WorkspaceDetails from "./pages/WorkspaceDetails";
 
 const UserHome = () => (
   <div className="text-2xl font-bold">User Dashboard Content</div>
@@ -53,6 +54,7 @@ function App() {
               <Route path="/createPrompt" element={<CreatePrompt />} />
               <Route path="/workspaces" element={<Workspaces />} />
               <Route path="/workspaces/new" element={<CreateWorkspace />} />
+              <Route path="/workspaces/:id" element={<WorkspaceDetails />} />
               <Route path="/settings" element={<Settings />} />
             </Route>
           </Route>

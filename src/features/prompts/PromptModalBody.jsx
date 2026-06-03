@@ -17,7 +17,7 @@ export const PromptModalBody = ({
         {isEditing ? (
           <textarea
             name="description"
-            value={formData.description}
+            value={formData?.description || ""}
             onChange={handleChange}
             rows="2"
             className="w-full text-[var(--color-grey-700)] bg-[var(--color-grey-50)] border border-[var(--color-grey-300)] rounded-lg px-3 py-2 outline-none focus:border-[var(--color-brand-500)] focus:ring-2 focus:ring-[var(--color-brand-200)] transition-all resize-none"
@@ -25,7 +25,8 @@ export const PromptModalBody = ({
           />
         ) : (
           <p className="text-[var(--color-grey-700)]">
-            {formData.description || "No description"}
+            {/* ضفنا ?. هنا كمان للحماية */}
+            {formData?.description || "No description"}
           </p>
         )}
       </div>
@@ -38,8 +39,7 @@ export const PromptModalBody = ({
               Content
             </label>
 
-            {/* زرار عرض الفيرجنات (تجهيز للمستقبل) */}
-            {!isEditing && prompt.prompt_versions?.length > 1 && (
+            {!isEditing && prompt?.prompt_versions?.length > 1 && (
               <button
                 className="flex items-center gap-1 text-[10px] uppercase font-bold text-[var(--color-brand-600)] bg-[var(--color-brand-50)] px-2 py-0.5 rounded-full hover:bg-[var(--color-brand-100)] transition-colors"
                 title="View previous versions"
@@ -50,20 +50,20 @@ export const PromptModalBody = ({
             )}
           </div>
 
-          {!isEditing && <CopyButton textToCopy={formData.content} />}
+          {!isEditing && <CopyButton textToCopy={formData?.content || ""} />}
         </div>
 
         {isEditing ? (
           <textarea
             name="content"
-            value={formData.content}
+            value={formData?.content || ""}
             onChange={handleChange}
             className="w-full flex-1 min-h-[250px] text-[var(--color-grey-800)] bg-[var(--color-grey-50)] border border-[var(--color-grey-300)] rounded-xl p-4 font-mono text-sm outline-none focus:border-[var(--color-brand-500)] focus:ring-2 focus:ring-[var(--color-brand-200)] transition-all resize-y"
             placeholder="Write your prompt content here..."
           />
         ) : (
           <div className="p-4 bg-[var(--color-grey-50)] rounded-xl border border-[var(--color-grey-100)] text-[var(--color-grey-800)] whitespace-pre-wrap break-words w-full font-mono text-sm selection:bg-[var(--color-brand-200)]">
-            {formData.content || "No content"}
+            {formData?.content || "No content"}
           </div>
         )}
       </div>

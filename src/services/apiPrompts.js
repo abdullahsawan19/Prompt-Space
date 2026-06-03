@@ -6,6 +6,11 @@ export async function getPrompts() {
     .select(
       `
       *,
+      workspaces (
+        id,
+        name,
+        type
+      ),
       prompt_versions (
         content,
         version_number
@@ -114,6 +119,20 @@ export async function deletePrompt(promptId) {
   if (error) {
     console.error("Error deleting prompt:", error);
     throw new Error("Prompt could not be deleted");
+  }
+
+  return true;
+}
+
+export async function deleteVersion(versionId) {
+  const { error } = await supabase
+    .from("prompt_versions")
+    .delete()
+    .eq("id", versionId);
+
+  if (error) {
+    console.error("Error deleting version:", error);
+    throw new Error("Failed to delete version");
   }
 
   return true;

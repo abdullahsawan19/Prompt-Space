@@ -133,3 +133,50 @@ export async function createWorkspace({ name, type, description, invites }) {
 
   return newWorkspace;
 }
+
+export async function deleteWorkspace(id) {
+  const { data, error } = await supabase
+    .from("workspaces")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error deleting workspace:", error);
+    throw new Error("Could not delete the workspace");
+  }
+
+  return data;
+}
+
+export async function getWorkspaceById(id) {
+  if (!id) throw new Error("Workspace ID is required");
+
+  const { data, error } = await supabase
+    .from("workspaces")
+    .select(
+      `
+      *,
+      prompts (
+        *,
+        prompt_versions (
+          *
+        )
+      )
+    `,
+    )
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("Error fetching workspace details:", error);
+    throw new Error("Workspace not found");
+  }
+
+  if (data.prompts && data.prompts.length > 0) {
+    data.prompts.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at),
+    );
+  }
+
+  return data;
+}

@@ -1,21 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deletePrompt } from "../../../services/apiPrompts";
+import { deleteVersion } from "../../../services/apiPrompts";
 import toast from "react-hot-toast";
 
-export function useDeletePrompt() {
+export function useDeleteVersion() {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: deletePrompt,
+    mutationFn: deleteVersion,
     onSuccess: () => {
+      toast.success("Version deleted successfully!");
       queryClient.invalidateQueries({ queryKey: ["prompts"] });
-      queryClient.invalidateQueries({ queryKey: ["workspace"] });
-      toast.success("Prompt deleted successfully!");
     },
     onError: (err) => {
-      toast.error("Error deleting prompt:", err.message);
+      toast.error("Error deleting version:", err.message);
     },
   });
-
   return { mutate, isPending };
 }

@@ -13,6 +13,7 @@ export function useCreatePrompt() {
       queryClient.invalidateQueries({
         queryKey: ["workspaces"],
       });
+      queryClient.invalidateQueries({ queryKey: ["workspace"] });
     },
     onError: (err) => {
       toast.error(err.message);

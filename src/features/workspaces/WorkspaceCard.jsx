@@ -1,13 +1,30 @@
-import { HiOutlineFolderOpen, HiOutlineDocumentText } from "react-icons/hi";
+import {
+  HiOutlineFolderOpen,
+  HiOutlineDocumentText,
+  HiOutlineTrash,
+} from "react-icons/hi";
 import Card from "../../ui/Card";
 import Button from "../../ui/Button";
+import { useDeleteWorkspace } from "./workspaces-Hooks/useDeleteWorkspace";
 
 const WorkspaceCard = ({ workspace }) => {
   const { id, name, type, description, prompts } = workspace;
 
+  const { mutate, isPending } = useDeleteWorkspace();
+
   const safePrompts = prompts || [];
   const previewPrompts = safePrompts.slice(0, 3);
   const remainingCount = safePrompts.length - previewPrompts.length;
+
+  const handleDelete = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this workspace? This action cannot be undone.",
+      )
+    ) {
+      mutate(id);
+    }
+  };
 
   return (
     <Card className="flex flex-col h-full">
@@ -17,10 +34,23 @@ const WorkspaceCard = ({ workspace }) => {
             <HiOutlineFolderOpen className="text-[var(--color-brand-600)]" />
             {name}
           </h3>
-          <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-[var(--color-brand-100)] text-[var(--color-brand-700)] rounded-full">
-            {type}
-          </span>
+
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-[var(--color-brand-100)] text-[var(--color-brand-700)] rounded-full">
+              {type}
+            </span>
+
+            <button
+              onClick={handleDelete}
+              disabled={isPending}
+              className="p-1.5 text-[var(--color-grey-400)] hover:text-red-600 hover:bg-red-50 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              title="Delete Workspace"
+            >
+              <HiOutlineTrash size={18} />
+            </button>
+          </div>
         </div>
+
         {description && (
           <p className="text-sm text-[var(--color-grey-500)] line-clamp-2 mt-2">
             {description}
