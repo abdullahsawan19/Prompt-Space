@@ -8,7 +8,8 @@ const PromptCardActions = ({
   isPending,
 }) => {
   return (
-    <div className="flex items-center gap-3">
+    <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+      {" "}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -19,7 +20,6 @@ const PromptCardActions = ({
       >
         <HiOutlinePencil size={20} />
       </button>
-
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -30,7 +30,6 @@ const PromptCardActions = ({
       >
         <HiEye size={20} />
       </button>
-
       <button
         onClick={(e) => {
           e.stopPropagation();
