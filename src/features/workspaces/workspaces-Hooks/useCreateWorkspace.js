@@ -13,6 +13,7 @@ export function useCreateWorkspace() {
       toast.success("Workspace created successfully");
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["simple-workspaces"] });
+      queryClient.invalidateQueries({ queryKey: ["prompts"] });
       navigate("/workspaces");
     },
     onError: (err) => {

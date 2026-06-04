@@ -1,23 +1,46 @@
-import { useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDeletePrompt } from "./prompts-Hooks/useDeletePrompt";
+import { useState, useMemo } from "react";
 import { usePrompts } from "./prompts-Hooks/usePrompts";
-import { HiOutlineFolderOpen } from "react-icons/hi";
-import Card from "../../ui/Card";
-import Button from "../../ui/Button";
+import { useDeletePrompt } from "./prompts-Hooks/useDeletePrompt";
+import { useNavigate } from "react-router-dom";
 import SpinnerMini from "../../ui/SpinnerMini";
-import PromptCardActions from "../../ui/PromptCardActions";
+import Button from "../../ui/Button";
+import SearchFilterBar from "../../ui/SearchFilterBar";
+import WorkspaceGroup from "./WorkspaceGroup";
 
 const DisplayPrompets = ({ onOpenModal }) => {
   const { mutate: deletePromptMutation, isPending } = useDeletePrompt();
-
   const { isLoading, error, prompts } = usePrompts();
   const navigate = useNavigate();
 
-  const groupedPrompts = useMemo(() => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedWorkspace, setSelectedWorkspace] = useState("all");
+
+  const uniqueWorkspaces = useMemo(() => {
+    if (!prompts) return [];
+    const map = new Map();
+    prompts.forEach((p) => {
+      const ws = p.workspaces || { id: "unassigned", name: "Personal" };
+      if (!map.has(ws.id)) map.set(ws.id, ws.name);
+    });
+    return Array.from(map.entries()).map(([id, name]) => ({ id, name }));
+  }, [prompts]);
+
+  const filteredAndGroupedPrompts = useMemo(() => {
     if (!prompts) return [];
 
-    const grouped = prompts.reduce((acc, prompt) => {
+    const filtered = prompts.filter((prompt) => {
+      const matchesSearch =
+        prompt.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        prompt.description?.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const workspaceId = prompt.workspaces?.id || "unassigned";
+      const matchesWorkspace =
+        selectedWorkspace === "all" || workspaceId === selectedWorkspace;
+
+      return matchesSearch && matchesWorkspace;
+    });
+
+    const grouped = filtered.reduce((acc, prompt) => {
       const workspace = prompt.workspaces || {
         id: "unassigned",
         name: "Personal",
@@ -33,14 +56,10 @@ const DisplayPrompets = ({ onOpenModal }) => {
     }, {});
 
     return Object.values(grouped);
-  }, [prompts]);
+  }, [prompts, searchQuery, selectedWorkspace]);
 
   const handleDelete = (promptId) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this prompt? This action cannot be undone.",
-    );
-
-    if (isConfirmed) {
+    if (window.confirm("Are you sure you want to delete this prompt?")) {
       deletePromptMutation(promptId);
     }
   };
@@ -56,101 +75,59 @@ const DisplayPrompets = ({ onOpenModal }) => {
   if (error) {
     return (
       <div className="text-center text-red-500 mt-8">
-        Could not load prompts. Please try again later.
+        Could not load prompts.
       </div>
     );
   }
 
   return (
-    <>
-      {groupedPrompts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[var(--color-grey-300)] bg-[var(--color-grey-0)] p-12 text-center mt-8">
-          <h3 className="mb-2 text-lg font-semibold text-[var(--color-grey-700)]">
-            No prompts yet
-          </h3>
-          <p className="text-[var(--color-grey-500)] mb-6">
-            Create your first prompt to get started with your workspace.
-          </p>
-          <Button onClick={() => navigate("/createPrompt")} variant="outline">
-            Create your first prompt
-          </Button>
-        </div>
+    <div className="space-y-6">
+      <SearchFilterBar
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search prompts by title or description..."
+        filterOptions={uniqueWorkspaces}
+        selectedFilter={selectedWorkspace}
+        onFilterChange={setSelectedWorkspace}
+        filterLabel="Filter by Workspace:"
+        allLabel="All Workspaces"
+      />
+
+      {filteredAndGroupedPrompts.length === 0 ? (
+        searchQuery || selectedWorkspace !== "all" ? (
+          <div className="text-center py-12 bg-[var(--color-grey-0)] border border-dashed border-[var(--color-grey-300)] rounded-2xl">
+            <p className="text-[var(--color-grey-500)]">
+              No prompts match your search or filter.
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[var(--color-grey-300)] bg-[var(--color-grey-0)] p-12 text-center mt-8">
+            <h3 className="mb-2 text-lg font-semibold text-[var(--color-grey-700)]">
+              No prompts yet
+            </h3>
+            <p className="text-[var(--color-grey-500)] mb-6">
+              Create your first prompt to get started.
+            </p>
+            <Button onClick={() => navigate("/createPrompt")} variant="outline">
+              Create your first prompt
+            </Button>
+          </div>
+        )
       ) : (
         <div className="flex flex-col gap-10">
-          {groupedPrompts.map((workspace) => {
-            const isClickable = workspace.id !== "unassigned";
-
-            return (
-              <div key={workspace.id} className="flex flex-col gap-4">
-                {/* Header Workspace */}
-                <div className="flex items-center w-full mb-2 mt-4">
-                  <div className="h-px flex-1 bg-[var(--color-grey-200)]"></div>
-
-                  <div
-                    onClick={() =>
-                      isClickable && navigate(`/workspaces/${workspace.id}`)
-                    }
-                    className={`flex items-center gap-2 mx-4 transition-all duration-200 ${
-                      isClickable ? "cursor-pointer group" : ""
-                    }`}
-                    title={isClickable ? "Go to Workspace Details" : ""}
-                  >
-                    <HiOutlineFolderOpen
-                      className={`text-[var(--color-brand-600)] ${
-                        isClickable
-                          ? "group-hover:scale-110 group-hover:text-[var(--color-brand-700)] transition-transform"
-                          : ""
-                      }`}
-                      size={24}
-                    />
-                    <h2
-                      className={`text-xl font-bold text-[var(--color-grey-800)] ${
-                        isClickable
-                          ? "group-hover:text-[var(--color-brand-600)] transition-colors"
-                          : ""
-                      }`}
-                    >
-                      {workspace.name}
-                    </h2>
-                    {workspace.type === "personal" && (
-                      <span className="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-[var(--color-grey-200)] text-[var(--color-grey-600)]">
-                        Personal
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="h-px flex-1 bg-[var(--color-grey-200)]"></div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-                  {workspace.prompts.map((prompt) => (
-                    <Card
-                      key={prompt.id}
-                      className="relative flex flex-col gap-3"
-                    >
-                      <PromptCardActions
-                        prompt={prompt}
-                        onOpenModal={onOpenModal}
-                        deletePrompt={handleDelete}
-                        isPending={isPending}
-                      />
-
-                      <h3 className="font-bold text-lg text-[var(--color-grey-900)] pr-20 truncate mt-1">
-                        {prompt.title}
-                      </h3>
-
-                      <p className="text-sm text-[var(--color-grey-500)] line-clamp-2">
-                        {prompt.description || "No description provided."}
-                      </p>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+          {filteredAndGroupedPrompts.map((workspace) => (
+            <WorkspaceGroup
+              key={workspace.id}
+              workspace={workspace}
+              navigate={navigate}
+              onOpenModal={onOpenModal}
+              handleDelete={handleDelete}
+              isPending={isPending}
+            />
+          ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
