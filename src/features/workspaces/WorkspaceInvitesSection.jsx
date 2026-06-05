@@ -4,6 +4,7 @@ import { HiOutlinePlus, HiOutlineTrash } from "react-icons/hi";
 import Input from "../../ui/Input";
 import Select from "../../ui/Select";
 import Button from "../../ui/Button";
+import toast from "react-hot-toast";
 
 const roleOptions = [
   { label: "Viewer", value: "viewer" },
@@ -24,12 +25,12 @@ const WorkspaceInvitesSection = ({ control, isCreating }) => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(currentEmail)) {
-      alert("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       return;
     }
 
     if (fields.find((inv) => inv.email === currentEmail)) {
-      alert("This email is already in the list!");
+      toast.error("This email is already in the list!");
       return;
     }
 

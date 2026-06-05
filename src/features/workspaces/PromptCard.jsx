@@ -47,7 +47,7 @@ const PromptCard = ({ prompt }) => {
         className="p-4 flex items-center justify-between cursor-pointer hover:bg-[var(--color-grey-50)] transition-colors group"
       >
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-[var(--color-brand-50)] dark:bg-[var(--color-brand-900)/30] text-[var(--color-brand-600)] dark:text-[var(--color-brand-400)] rounded-lg">
+          <div className="p-2 bg-[var(--color-brand-50)] text-[var(--color-brand-600)] rounded-lg">
             <HiOutlineDocumentText size={24} />
           </div>
           <div>
