@@ -29,13 +29,21 @@ const WorkspaceCard = ({ workspace }) => {
   return (
     <Card className="flex flex-col h-full">
       <div className="border-b border-[var(--color-grey-100)] pb-4 mb-4">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-xl font-bold text-[var(--color-grey-900)] flex items-center gap-2">
-            <HiOutlineFolderOpen className="text-[var(--color-brand-600)]" />
-            {name}
-          </h3>
+        <div className="flex justify-between items-start mb-2 gap-4">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            <HiOutlineFolderOpen
+              size={24}
+              className="text-[var(--color-brand-600)] shrink-0"
+            />
+            <h3
+              className="text-xl font-bold text-[var(--color-grey-900)] truncate max-w-[80px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-none"
+              title={name}
+            >
+              {name}
+            </h3>
+          </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-[var(--color-brand-100)] text-[var(--color-brand-700)] rounded-full">
               {type}
             </span>
@@ -43,7 +51,7 @@ const WorkspaceCard = ({ workspace }) => {
             <button
               onClick={handleDelete}
               disabled={isPending}
-              className="p-1.5 text-[var(--color-grey-400)] hover:text-red-600 hover:bg-red-50 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-1.5 text-[var(--color-grey-400)] hover:text-red-600 hover:bg-red-50 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed outline-none"
               title="Delete Workspace"
             >
               <HiOutlineTrash size={18} />

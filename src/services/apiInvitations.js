@@ -69,3 +69,67 @@ export async function sendInvitation({
 
   return data;
 }
+
+export async function getMyPendingInvitations(email) {
+  const { data, error } = await supabase
+    .from("workspace_invitations")
+    .select(
+      `
+      id,
+      workspace_id,
+      role,
+      status,
+      created_at,
+      workspaces ( name ),
+      users!workspace_invitations_invited_by_fkey ( full_name, email )
+    `,
+    )
+    .eq("email", email)
+    .eq("status", "pending");
+
+  if (error) {
+    console.error(error);
+    throw new Error("Could not fetch your invitations");
+  }
+
+  return data;
+}
+
+export async function updateInvitationStatus({
+  inviteId,
+  status,
+  workspaceId,
+  role,
+  userId,
+}) {
+  const { data, error } = await supabase
+    .from("workspace_invitations")
+    .update({ status })
+    .eq("id", inviteId)
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not ${status} the invitation`);
+  }
+
+  if (status === "accepted") {
+    const { error: memberError } = await supabase
+      .from("workspace_members")
+      .insert([
+        {
+          workspace_id: workspaceId,
+          user_id: userId,
+          role: role,
+        },
+      ]);
+
+    if (memberError) {
+      console.error(memberError);
+      throw new Error("Could not add you to the workspace members");
+    }
+  }
+
+  return data;
+}

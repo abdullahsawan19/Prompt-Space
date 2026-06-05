@@ -13,7 +13,8 @@ export async function getPrompts() {
       ),
       prompt_versions (
         content,
-        version_number
+        version_number,
+        created_at
       ),
       prompt_tags (
         tags (
@@ -23,7 +24,8 @@ export async function getPrompts() {
     `,
     )
     .eq("is_archived", false)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .order("created_at", { foreignTable: "prompt_versions", ascending: false });
 
   if (error) {
     console.error("Error fetching prompts:", error);

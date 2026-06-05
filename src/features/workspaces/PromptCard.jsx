@@ -11,11 +11,13 @@ import SpinnerMini from "../../ui/SpinnerMini";
 import PromptVersionItem from "./PromptVersionItem";
 import PromptEditForm from "./PromptEditForm";
 
-const PromptCard = ({ prompt }) => {
+const PromptCard = ({ prompt, currentUserRole }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { mutate: deletePromptMutation, isPending: isDeletingPrompt } =
     useDeletePrompt();
+
+  const canEdit = ["owner", "admin", "editor"].includes(currentUserRole);
 
   const versionsCount = prompt.prompt_versions?.length || 0;
   const sortedVersions = [...(prompt.prompt_versions || [])].sort(
@@ -61,30 +63,33 @@ const PromptCard = ({ prompt }) => {
         </div>
 
         <div className="flex items-center gap-4">
-          <div
-            className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={handleStartEdit}
-              className="text-[var(--color-grey-400)] hover:text-[var(--color-brand-600)] transition-colors outline-none"
-              title="Edit latest version"
+          {canEdit && (
+            <div
+              className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity"
+              onClick={(e) => e.stopPropagation()}
             >
-              <HiOutlinePencil size={20} />
-            </button>
-            <button
-              onClick={handleDelete}
-              disabled={isDeletingPrompt}
-              className="text-[var(--color-grey-400)] hover:text-red-500 transition-colors outline-none"
-              title="Delete Prompt"
-            >
-              {isDeletingPrompt ? (
-                <SpinnerMini />
-              ) : (
-                <HiOutlineTrash size={20} />
-              )}
-            </button>
-          </div>
+              <button
+                onClick={handleStartEdit}
+                className="text-[var(--color-grey-400)] hover:text-[var(--color-brand-600)] transition-colors outline-none"
+                title="Edit latest version"
+              >
+                <HiOutlinePencil size={20} />
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={isDeletingPrompt}
+                className="text-[var(--color-grey-400)] hover:text-red-500 transition-colors outline-none"
+                title="Delete Prompt"
+              >
+                {isDeletingPrompt ? (
+                  <SpinnerMini />
+                ) : (
+                  <HiOutlineTrash size={20} />
+                )}
+              </button>
+            </div>
+          )}
+
           <div className="text-[var(--color-grey-400)] border-l border-[var(--color-grey-200)] pl-4">
             {isOpen ? (
               <HiOutlineChevronUp size={24} />
@@ -125,6 +130,7 @@ const PromptCard = ({ prompt }) => {
                   key={version.id}
                   prompt={prompt}
                   version={version}
+                  currentUserRole={currentUserRole}
                 />
               );
             })

@@ -12,6 +12,7 @@ export async function getWorkspaces(userId) {
         name,
         type,
         description,
+        created_at, 
         prompts (
           id,
           title,
@@ -29,14 +30,16 @@ export async function getWorkspaces(userId) {
 
   const uniqueWorkspaces = Array.from(
     new Map(data.map((item) => [item.workspaces.id, item.workspaces])).values(),
-  ).map((workspace) => {
-    if (workspace.prompts && workspace.prompts.length > 0) {
-      workspace.prompts.sort(
-        (a, b) => new Date(b.created_at) - new Date(a.created_at),
-      );
-    }
-    return workspace;
-  });
+  )
+    .map((workspace) => {
+      if (workspace.prompts && workspace.prompts.length > 0) {
+        workspace.prompts.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at),
+        );
+      }
+      return workspace;
+    })
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   return uniqueWorkspaces;
 }
