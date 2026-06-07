@@ -99,14 +99,14 @@ Deno.serve(async (req) => {
                         </div>
 
                         <div style="text-align: center; margin-bottom: 20px;">
-                          <a href="http://localhost:5173/accept-invite?email=${inviteRecord.email}&workspace=${inviteRecord.workspace_id}" 
+                          <a href="prompt-space-phi.vercel.app/accept-invite?email=${inviteRecord.email}&workspace=${inviteRecord.workspace_id}" 
                              style="display: inline-block; background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); color: #ffffff; padding: 16px 35px; border-radius: 50px; font-size: 16px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);">
                              Accept Your Invitation
                           </a>
                         </div>
                         
                         <p style="margin: 30px 0 0 0; text-align: center; font-size: 14px; color: #9ca3af;">
-                          (or copy & paste: http://localhost:5173/... )
+                          (or copy & paste: prompt-space-phi.vercel.app )
                         </p>
 
                       </td>
