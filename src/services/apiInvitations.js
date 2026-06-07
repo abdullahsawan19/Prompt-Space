@@ -29,20 +29,34 @@ export async function getSentInvitations({ workspaceId, filterStatus, page }) {
 }
 
 export async function deleteInvitation(id) {
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("workspace_invitations")
     .delete()
-    .eq("id", id);
+    .eq("id", id)
+    .select();
 
   if (error) {
     console.error(error);
     throw new Error("Could not delete invitation");
   }
 
+  if (!data || data.length === 0) {
+    throw new Error("You do not have permission to delete this invitation.");
+  }
+
   return id;
 }
 
-export async function sendInvitation({ workspaceId, email, role, invitedBy }) {
+export async function sendInvitation({ workspaceId, email, role }) {
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    throw new Error("You must be logged in to send invitations.");
+  }
+
   const { data: targetUser, error: userError } = await supabase
     .from("users")
     .select("accepts_invitations")
@@ -55,7 +69,14 @@ export async function sendInvitation({ workspaceId, email, role, invitedBy }) {
 
   const { data, error } = await supabase
     .from("workspace_invitations")
-    .insert([{ workspace_id: workspaceId, email, role, invited_by: invitedBy }])
+    .insert([
+      {
+        workspace_id: workspaceId,
+        email,
+        role,
+        invited_by: user.id,
+      },
+    ])
     .select()
     .single();
 

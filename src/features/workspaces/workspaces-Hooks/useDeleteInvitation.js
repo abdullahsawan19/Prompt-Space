@@ -9,6 +9,10 @@ export function useDeleteInvitation() {
     mutationFn: deleteInvitation,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sentInvitations"] });
+      queryClient.invalidateQueries({ queryKey: ["pendingInvitations"] });
+      queryClient.invalidateQueries({ queryKey: ["myPendingInvitations"] });
+      queryClient.invalidateQueries({ queryKey: ["workspace"] });
+      queryClient.invalidateQueries({ queryKey: ["prompts"] });
 
       toast.success("The invitation has been deleted successfully!");
     },

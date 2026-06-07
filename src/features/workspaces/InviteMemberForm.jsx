@@ -6,7 +6,6 @@ import Select from "../../ui/Select";
 import Button from "../../ui/Button";
 import { useSendInvitation } from "./workspaces-Hooks/useSendInvitation";
 import { useParams } from "react-router-dom";
-import { useUser } from "../auth/Auth-Hooks/useUser";
 
 const roleOptions = [
   { label: "Viewer", value: "viewer" },
@@ -14,7 +13,6 @@ const roleOptions = [
 ];
 
 const InviteMemberForm = ({ onClose }) => {
-  const { user } = useUser();
   const { id: workspaceId } = useParams();
   const { mutate: sendInvitation, isPending: isSending } = useSendInvitation();
 
@@ -34,7 +32,6 @@ const InviteMemberForm = ({ onClose }) => {
         workspaceId,
         email: data.email,
         role: data.role,
-        currentUserId: user.id,
       },
       {
         onSuccess: () => {
