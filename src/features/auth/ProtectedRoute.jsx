@@ -6,8 +6,6 @@ const ProtectedRoute = ({ allowedRoles }) => {
   const { isLoading, isAuthenticated, user } = useUser();
   const navigate = useNavigate();
 
-  console.log("User Object from Hook:", user);
-
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       navigate("/login", { replace: true });

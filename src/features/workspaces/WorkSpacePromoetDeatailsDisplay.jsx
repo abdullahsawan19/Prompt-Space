@@ -13,7 +13,6 @@ const WorkSpacePromoetDeatailsDisplay = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: workspace } = useWorkspace();
-  console.log(workspace);
 
   const prompts = workspace?.prompts || [];
 
