@@ -1,4 +1,5 @@
 import { supabase } from "../config/supabase";
+let isSyncing = false;
 
 export async function login({ email, password }) {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -51,7 +52,6 @@ export async function getCurrentUser() {
 }
 
 export async function loginWithProvider(provider) {
-  // provider = 'google' | 'github'
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
@@ -66,8 +66,6 @@ export async function loginWithProvider(provider) {
 
   return data;
 }
-
-let isSyncing = false;
 
 export async function ensureUserAndWorkspace(user) {
   if (!user || isSyncing) return;
@@ -115,6 +113,18 @@ export async function ensureUserAndWorkspace(user) {
   } finally {
     isSyncing = false;
   }
+}
+
+export async function updateUserProfile({ userId, fullName }) {
+  const { data, error } = await supabase
+    .from("users")
+    .update({ full_name: fullName })
+    .eq("id", userId)
+    .select()
+    .single();
+
+  if (error) throw new Error("Could not update profile information");
+  return data;
 }
 
 export async function logout() {

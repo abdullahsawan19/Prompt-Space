@@ -114,23 +114,42 @@ export async function createWorkspace({ name, type, description, invites }) {
   }
 
   if (invites && invites.length > 0) {
-    const invitationsData = invites.map((invite) => ({
-      workspace_id: newWorkspace.id,
-      email: invite.email,
-      role: invite.role,
-      invited_by: user.id,
-      status: "pending",
-    }));
+    const emailsToInvite = invites.map((invite) => invite.email);
 
-    const { error: invitesError } = await supabase
-      .from("workspace_invitations")
-      .insert(invitationsData);
+    const { data: optedOutUsers, error: checkError } = await supabase
+      .from("users")
+      .select("email")
+      .in("email", emailsToInvite)
+      .eq("accepts_invitations", false);
 
-    if (invitesError) {
-      console.error(
-        "Warning: Workspace created, but failed to send some invites:",
-        invitesError,
-      );
+    if (checkError) {
+      console.error("Error checking user preferences:", checkError);
+    }
+
+    const optedOutEmails = new Set(optedOutUsers?.map((u) => u.email) || []);
+    const validInvites = invites.filter(
+      (invite) => !optedOutEmails.has(invite.email),
+    );
+
+    if (validInvites.length > 0) {
+      const invitationsData = validInvites.map((invite) => ({
+        workspace_id: newWorkspace.id,
+        email: invite.email,
+        role: invite.role,
+        invited_by: user.id,
+        status: "pending",
+      }));
+
+      const { error: invitesError } = await supabase
+        .from("workspace_invitations")
+        .insert(invitationsData);
+
+      if (invitesError) {
+        console.error(
+          "Warning: Workspace created, but failed to send some invites:",
+          invitesError,
+        );
+      }
     }
   }
 
