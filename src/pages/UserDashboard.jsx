@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import ReuseableHeader from "../ui/ReuseableHeader";
 import { useUser } from "../features/auth/Auth-Hooks/useUser";
+import ReuseableHeader from "../ui/ReuseableHeader";
 import SpinnerMini from "../ui/SpinnerMini";
 import DisplayStats from "../features/UserDashboard/DisplayStats";
-import AreaCharts from "../features/UserDashboard/AreaCharts";
+import AreaCharts from "../features/UserDashboard/DisplayAreaCharts";
 import Invitations from "../features/UserDashboard/Invitations";
 import RecentPrompts from "../features/UserDashboard/RecentPrompts";
-import PieChart from "../features/UserDashboard/PieChart";
+import DisplayPieChart from "../features/UserDashboard/DisplayPieChart";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -39,12 +39,12 @@ const UserDashboard = () => {
 
       <DisplayStats />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AreaCharts />
+        <RecentPrompts />
         <Invitations />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <PieChart />
-        <RecentPrompts />
+        <DisplayPieChart />
+        <AreaCharts />
       </div>
     </div>
   );

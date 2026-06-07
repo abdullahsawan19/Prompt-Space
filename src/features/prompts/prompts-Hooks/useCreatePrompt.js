@@ -15,6 +15,8 @@ export function useCreatePrompt() {
       });
       queryClient.invalidateQueries({ queryKey: ["workspace"] });
       queryClient.invalidateQueries({ queryKey: ["recentPrompts"] });
+      queryClient.invalidateQueries({ queryKey: ["areaChart"] });
+      queryClient.invalidateQueries({ queryKey: ["pieChart"] });
     },
     onError: (err) => {
       toast.error(err.message);

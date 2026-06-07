@@ -14,6 +14,8 @@ export function useCreateWorkspace() {
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["simple-workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["prompts"] });
+      queryClient.invalidateQueries({ queryKey: ["areaChart"] });
+      queryClient.invalidateQueries({ queryKey: ["pieChart"] });
       navigate("/workspaces");
     },
     onError: (err) => {
