@@ -1,21 +1,31 @@
+import { lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
 import { Toaster } from "react-hot-toast";
-import PublicLayout from "./layouts/PublicLayout";
-import Landing from "./pages/Landing";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import FormsLayout from "./layouts/FormsLayout";
+import "./App.css";
+
 import ProtectedRoute from "./features/auth/ProtectedRoute";
-import AdminDashboardLayout from "./layouts/AdminDashboardLayout";
-import UserDashboardLayout from "./layouts/UserDashboardLayout";
-import Prompts from "./pages/Prompts";
-import CreatePrompt from "./pages/CreatePrompt";
-import Workspaces from "./pages/Workspaces";
-import CreateWorkspace from "./features/workspaces/CreateWorkspace";
-import WorkspaceDetails from "./pages/WorkspaceDetails";
-import UserDashboard from "./pages/UserDashboard";
-import SettingsPage from "./pages/SettingsPage";
+
+const PublicLayout = lazy(() => import("./layouts/PublicLayout"));
+const FormsLayout = lazy(() => import("./layouts/FormsLayout"));
+const AdminDashboardLayout = lazy(
+  () => import("./layouts/AdminDashboardLayout"),
+);
+const UserDashboardLayout = lazy(() => import("./layouts/UserDashboardLayout"));
+
+const Landing = lazy(() => import("./pages/Landing"));
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
+const Prompts = lazy(() => import("./pages/Prompts"));
+const CreatePrompt = lazy(() => import("./pages/CreatePrompt"));
+const Workspaces = lazy(() => import("./pages/Workspaces"));
+const CreateWorkspace = lazy(
+  () => import("./features/workspaces/CreateWorkspace"),
+);
+const WorkspaceDetails = lazy(() => import("./pages/WorkspaceDetails"));
+const UserDashboard = lazy(() => import("./pages/UserDashboard"));
+const SettingsPage = lazy(() => import("./pages/SettingsPage"));
+
+// TODO: Admin pages to be implemented in the future
 
 const AdminStats = () => (
   <div className="text-2xl font-bold">System Stats Content</div>
