@@ -14,6 +14,7 @@ export function useCreatePrompt() {
         queryKey: ["workspaces"],
       });
       queryClient.invalidateQueries({ queryKey: ["workspace"] });
+      queryClient.invalidateQueries({ queryKey: ["recentPrompts"] });
     },
     onError: (err) => {
       toast.error(err.message);

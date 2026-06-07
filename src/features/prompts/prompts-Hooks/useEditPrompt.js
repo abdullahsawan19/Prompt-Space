@@ -62,6 +62,7 @@ export function useEditPrompt() {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["prompts"] });
       queryClient.invalidateQueries({ queryKey: ["workspace"] });
+      queryClient.invalidateQueries({ queryKey: ["recentPrompts"] });
     },
 
     onSuccess: () => {

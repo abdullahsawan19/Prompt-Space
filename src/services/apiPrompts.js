@@ -35,6 +35,31 @@ export async function getPrompts() {
   return data;
 }
 
+export async function getRecentPrompts() {
+  const { data, error } = await supabase
+    .from("prompts")
+    .select(
+      `
+      id,
+      workspace_id,
+      title,
+      created_at,
+      workspaces (
+        name
+      )
+    `,
+    )
+    .eq("is_archived", false)
+    .order("created_at", { ascending: false })
+    .limit(5);
+
+  if (error) {
+    throw new Error("Could not fetch recent prompts");
+  }
+
+  return data;
+}
+
 export async function editPrompt({ promptId, title, description, content }) {
   const {
     data: { user },

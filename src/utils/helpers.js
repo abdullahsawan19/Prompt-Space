@@ -8,3 +8,10 @@ export const copyToClipboard = async (text) => {
     return false;
   }
 };
+
+import { format } from "date-fns";
+
+export const formatRecentDate = (dateString) => {
+  if (!dateString) return "";
+  return format(new Date(dateString), "MMM d, hh:mm a");
+};

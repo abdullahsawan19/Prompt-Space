@@ -10,6 +10,7 @@ export function useDeletePrompt() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["prompts"] });
       queryClient.invalidateQueries({ queryKey: ["workspace"] });
+      queryClient.invalidateQueries({ queryKey: ["recentPrompts"] });
       toast.success("Prompt deleted successfully!");
     },
     onError: (err) => {
