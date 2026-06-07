@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { Toaster } from "react-hot-toast";
 import PublicLayout from "./layouts/PublicLayout";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import FormsLayout from "./layouts/FormsLayout";
-import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./features/auth/ProtectedRoute";
 import AdminDashboardLayout from "./layouts/AdminDashboardLayout";
 import UserDashboardLayout from "./layouts/UserDashboardLayout";
