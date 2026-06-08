@@ -43,7 +43,10 @@ const TargetAudienceSection = () => {
   ];
 
   return (
-    <section id="audience" className="py-24 max-w-7xl mx-auto px-6 text-center">
+    <section
+      id="audience"
+      className="pt-24 pb-12 md:pb-16 max-w-7xl mx-auto px-6 text-center"
+    >
       <h2 className="text-4xl font-bold mb-4 text-[var(--color-grey-900)]">
         Tailored for Modern Creators
       </h2>

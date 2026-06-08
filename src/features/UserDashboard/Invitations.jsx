@@ -1,4 +1,3 @@
-import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { useGetmyInvitations } from "./UserDashboard-Hooks/useGetmyInvitations";
 import SpinnerMini from "../../ui/SpinnerMini";
 import InvitaionDisplay from "./InvitaionDisplay";
@@ -8,12 +7,12 @@ const Invitations = () => {
   const { MyInvitations, MyInvitationsPending } = useGetmyInvitations();
 
   return (
-    <div className="bg-[var(--color-grey-0)] border border-[var(--color-grey-200)] rounded-xl p-6 min-h-[350px] shadow-sm flex flex-col">
-      <h2 className="text-lg font-bold text-[var(--color-grey-800)] mb-4 border-b border-[var(--color-grey-100)] pb-4">
+    <div className="bg-[var(--color-grey-0)] border border-[var(--color-grey-200)] rounded-xl p-6 shadow-sm flex flex-col h-[400px]">
+      <h2 className="text-lg font-bold text-[var(--color-grey-800)] mb-4 border-b border-[var(--color-grey-100)] pb-4 shrink-0">
         Pending Invitations {MyInvitations.length}
       </h2>
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
         {MyInvitationsPending ? (
           <div className="flex-1 flex items-center justify-center">
             <SpinnerMini />

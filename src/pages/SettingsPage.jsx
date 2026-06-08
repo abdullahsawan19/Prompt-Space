@@ -1,8 +1,4 @@
-import {
-  HiOutlineUser,
-  HiOutlineShieldCheck,
-  HiOutlineAdjustments,
-} from "react-icons/hi";
+import { HiOutlineUser, HiOutlineAdjustments } from "react-icons/hi";
 import Settings from "../layouts/SettingsLayout";
 import ProfileSettings from "../features/Settings/ProfileSettings";
 import PreferencesSettings from "../features/Settings/PreferencesSettings";
@@ -13,9 +9,6 @@ const SettingsPage = () => {
       <Settings.Sidebar title="Settings">
         <Settings.Tab id="profile" icon={<HiOutlineUser size={20} />}>
           Account Profile
-        </Settings.Tab>
-        <Settings.Tab id="security" icon={<HiOutlineShieldCheck size={20} />}>
-          Security
         </Settings.Tab>
         <Settings.Tab
           id="preferences"
