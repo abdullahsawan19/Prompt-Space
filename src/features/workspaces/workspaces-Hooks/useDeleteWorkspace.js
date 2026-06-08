@@ -9,6 +9,9 @@ export function useDeleteWorkspace() {
     mutationFn: deleteWorkspace,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboardStats"] });
+      queryClient.invalidateQueries({ queryKey: ["prompts"] });
+      queryClient.invalidateQueries({ queryKey: ["pieChart"] });
       toast.success("Workspace deleted successfully!");
     },
     onError: (err) => {

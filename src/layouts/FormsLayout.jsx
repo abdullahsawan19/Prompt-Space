@@ -7,7 +7,6 @@ const FormsLayout = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--color-grey-50)] transition-colors duration-300">
-      {/* شريط علوي بالعرض فيه اللوجو وزرار الثيم */}
       <header className="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
         <Link
           to="/"
@@ -27,7 +26,6 @@ const FormsLayout = () => {
         </button>
       </header>
 
-      {/* الجزء اللي في النص اللي هيشيل العنوان والفورم */}
       <main className="flex-1 flex flex-col items-center justify-center px-4 pb-20">
         <Outlet />
       </main>
