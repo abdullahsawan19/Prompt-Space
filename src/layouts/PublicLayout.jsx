@@ -59,7 +59,7 @@ const PublicLayout = () => {
         links={publicLinks}
         rightActions={publicRightActions}
         mobileExtraContent={mobileMenuExtraContent}
-        className="sticky top-0"
+        className="!sticky top-0 z-50"
       />
 
       <main className="flex-grow flex flex-col">

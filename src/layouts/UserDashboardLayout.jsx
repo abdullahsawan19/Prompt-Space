@@ -21,7 +21,7 @@ const UserDashboardLayout = () => {
   return (
     <div className="flex h-screen overflow-hidden bg-[var(--color-grey-50)]">
       <Navbar
-        className="fixed left-0 top-0 md:hidden"
+        className="!fixed left-0 top-0 !z-40 w-full md:hidden"
         rightActions={
           <button
             onClick={() => setIsMobileMenuOpen(true)}
@@ -40,7 +40,7 @@ const UserDashboardLayout = () => {
       )}
 
       <div
-        className={`fixed inset-y-0 left-0 z-50 transform bg-[var(--color-grey-0)] transition-transform duration-300 ease-in-out md:static md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 shrink-0 transform bg-[var(--color-grey-0)] transition-transform duration-300 ease-in-out md:static md:translate-x-0 ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -51,7 +51,7 @@ const UserDashboardLayout = () => {
         />
       </div>
 
-      <main className="flex-1 overflow-y-auto p-4 pt-20 md:p-8 md:pt-8">
+      <main className="flex-1 min-w-0 overflow-y-auto p-4 pt-24 md:p-8 md:pt-8 w-full">
         <div className="mx-auto max-w-6xl">
           <Outlet />
         </div>
