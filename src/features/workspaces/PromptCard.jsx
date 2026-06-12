@@ -46,7 +46,7 @@ const PromptCard = ({ prompt, currentUserRole }) => {
     <div className="bg-[var(--color-grey-0)] border border-[var(--color-grey-200)] rounded-xl shadow-sm overflow-hidden transition-all duration-300">
       <div
         onClick={togglePrompt}
-        className="p-4 flex items-center justify-between cursor-pointer hover:bg-[var(--color-grey-50)] transition-colors group"
+        className="p-4 flex items-center justify-between cursor-pointer hover:bg-[var(--color-grey-50)] transition-colors"
       >
         <div className="flex items-center gap-3">
           <div className="p-2 bg-[var(--color-brand-50)] text-[var(--color-brand-600)] rounded-lg">
@@ -65,7 +65,7 @@ const PromptCard = ({ prompt, currentUserRole }) => {
         <div className="flex items-center gap-4">
           {canEdit && (
             <div
-              className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="flex items-center gap-3"
               onClick={(e) => e.stopPropagation()}
             >
               <button

@@ -21,7 +21,7 @@ const Input = forwardRef(
             type={isPassword && showPassword ? "text" : type}
             className={`w-full px-4 py-2.5 rounded-xl border ${
               error ? "border-red-500" : "border-[var(--color-grey-300)]"
-            } focus:outline-none focus:border-[var(--color-brand-500)] focus:ring-1 focus:ring-[var(--color-brand-500)] bg-transparent text-[var(--color-grey-900)] transition-colors ${
+            } focus:outline-none focus:border-[var(--color-brand-500)] focus:ring-1 focus:ring-[var(--color-brand-500)] focus:ring-offset-0 bg-transparent text-[var(--color-grey-900)] transition-colors ${
               isPassword ? "pr-12" : ""
             }`}
             {...props}
